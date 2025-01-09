@@ -167,8 +167,8 @@ register("step", () => {
     ChatLib.chat(lineBreak)
     ChatLib.chat("&aThanks for downloading &b&lDanceRoomSolver(ft. Salesman)&r&a!\n")
     ChatLib.chat("&7To use, type /ct reload the moment you see this message and at or around 94%, stand on &agreen block &7in the &dDance Room and begin&7.")
-    Chatlib.chat("This may require some minor adjustments on the users end based on ping and latency.")
-    Chatlib.chat("If you get stuck in barrier blocks, warp out &limmediately to avoid any potential ban.")
+    ChatLib.chat("This may require some minor adjustments on the users end based on ping and latency.")
+    ChatLib.chat("If you get stuck in barrier blocks, warp out &limmediately to avoid any potential ban.")
     ChatLib.chat(lineBreak)
     settings.firstTime = false
     settings.save()
