@@ -162,7 +162,7 @@ register("step", () => {
   inMirrorverse = Scoreboard.getLines().some(line => (
     ChatLib.removeFormatting(line.getName()).replace(/[^\x00-\x7F]/g, "").trim() == "Mirrorverse"
   ))
-  if (inMirrorverse) {
+  if (inMirrorverse && settings.firstTime) {
     const lineBreak = ChatLib.getChatBreak("&a&m-")
     ChatLib.chat(lineBreak)
     ChatLib.chat("&aThanks for downloading &b&lDanceRoomSolver(ft. Salesman)&r&a!\n")
