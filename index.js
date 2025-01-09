@@ -1,4 +1,5 @@
-/// <reference types="../CTAutocomplete" />
+/// <reference types="../CTAutocomplete" /> 
+//ensure you do /ct import CTAutocomplete if you do not already have the chattriggers module.
 
 import PogObject from "../PogData"
 let settings = new PogObject("DanceRoomSolver", { firstTime: true, volume: 1.0, recordVolume: 1.0 }, "settings.json")
@@ -154,40 +155,32 @@ const doMove = (beat) => {
   ChatLib.chat(`&7${statusString}.`)
 }
 
-// Only try to do anything when in the Mirrorverse
+// Automatically activate the solver when in Mirrorverse, this will require some precise timing on the users end but is very much a functional program. 
+// You will want to type /ct reload the moment you get into the dance room, and at 94%, begin the sequence on your own. Beginning on the second glass block, the program
+// will do the rest for you. You may have to make some modifications to your timing based on ping and latency. 
+
 register("step", () => {
   inMirrorverse = Scoreboard.getLines().some(line => (
     ChatLib.removeFormatting(line.getName()).replace(/[^\x00-\x7F]/g, "").trim() == "Mirrorverse"
   ))
-  if (inMirrorverse && settings.firstTime) {
+  if (inMirrorverse) {
     const lineBreak = ChatLib.getChatBreak("&a&m-")
     ChatLib.chat(lineBreak)
-    ChatLib.chat("&aThanks for downloading &b&lDanceRoomSolver&r&a!\n")
-    ChatLib.chat("&7To use, stand on the &agreen block &7in the &dDance Room&7.")
-    ChatLib.chat("&7The solver will run automagically.")
+    ChatLib.chat("&aThanks for downloading &b&lDanceRoomSolver(ft. Salesman)&r&a!\n")
+    ChatLib.chat("&7To use, type /ct reload the moment you see this message and at or around 94%, stand on &agreen block &7in the &dDance Room and begin&7.")
+    Chatlib.chat("This may require some minor adjustments on the users end based on ping and latency.")
+    Chatlib.chat("If you get stuck in barrier blocks, warp out &limmediately to avoid any potential ban.")
     ChatLib.chat(lineBreak)
     settings.firstTime = false
     settings.save()
   }
+  if (inMirrorverse && !isActive) {
+    new Thread(() => {
+      Thread.sleep(1000)  // 1-second delay before activating the solver
+      setActive() // Always enable the solver once you are in the Mirrorverse
+    }).start()
+  }
 }).setDelay(3)
-
-// Determine whether solver should be active based on title text
-register("renderTitle", (title, subtitle, event) => {
-  if (!inMirrorverse) return
-  if (subtitle != "§bMove!§r") return
-  if (!isActive) {
-    ChatLib.chat("&b&lAmbient &7» &bDance Room Solver Enabled!")
-    setActive()
-  }
-})
-
-// Turn off if you move your mouse
-register("tick", () => {
-  if (isActive && (Player.getYaw() != 90 || Player.getPitch() != 90)) {
-    ChatLib.chat("&b&lAmbient &7» &cCancelled because you moved your mouse!")
-    setInactive()
-  }
-})
 
 // Determine beats and overall status using sounds
 register("soundPlay", (position, name, vol, pitch) => {
