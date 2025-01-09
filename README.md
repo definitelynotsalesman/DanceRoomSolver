@@ -6,6 +6,7 @@ Additionally, you will want to run /ct reload from the moment you enter the danc
 glass block, the program should do the rest on its own. 
 
 If you fail to start with proper timing, simply type /ct reload again and try again, adjusting your timing depending on if you were late or early. 
+
 ***If you get stuck in barrier blocks, warp out immediately to not risk a ban.***
 https://github.com/appable0/DanceRoomSolver/assets/16139460/c5b57217-67d0-448f-abec-312da847ae15
 
