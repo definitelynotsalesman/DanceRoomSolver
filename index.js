@@ -155,10 +155,9 @@ const doMove = (beat) => {
   ChatLib.chat(`&7${statusString}.`)
 }
 
-// Automatically activate the solver when in Mirrorverse, this will require some precise timing on the users end but is very much a functional program. 
-// You will want to type /ct reload the moment you get into the dance room, and at 94%, begin the sequence on your own. Beginning on the second glass block, the program
-// will do the rest for you. You may have to make some modifications to your timing based on ping and latency. 
-
+// Automatically activates the solver the moment you enter the Mirrorverse with a slight delay. This means it will require some adjustment on the user's end but is very much a functional module. 
+// You will want to type /ct reload the moment you get into the dance room, and at around 94%, begin the sequence on your own. You may have to make some modifications to your timing based on ping and latency. 
+// Beginning on the second glass block, the program will do the rest for you. 
 register("step", () => {
   inMirrorverse = Scoreboard.getLines().some(line => (
     ChatLib.removeFormatting(line.getName()).replace(/[^\x00-\x7F]/g, "").trim() == "Mirrorverse"
@@ -174,9 +173,10 @@ register("step", () => {
     settings.firstTime = false
     settings.save()
   }
+  
   if (inMirrorverse && !isActive) {
     new Thread(() => {
-      Thread.sleep(1000)  // 1-second delay before activating the solver
+      Thread.sleep(1000)  // 1-second delay before activating the solver to prevent you doing the movements in the waiting room. 
       setActive() // Always enable the solver once you are in the Mirrorverse
     }).start()
   }
